@@ -1,3 +1,4 @@
+//Create empty array to hold values in
 var blockArray = [
   {r:0,g:0,b:0,id:''},
   {r:0,g:0,b:0,id:''},
@@ -5,17 +6,18 @@ var blockArray = [
   {r:0,g:0,b:0,id:''}
 ];
 
+//initialize answer variable that will receive a random number
 var answerIndex = 0;
 
 var oldBlockArrayID = [0,0,0,0];
 
 $(document).ready(function(){
 
-  randomColor(blockArray);
+  randomColor(blockArray);  //chooses a random rgb color for each index in blockArray
   console.log(blockArray);
 
   appendDom(blockArray);
-  answerIndex = blockArray[getRandomInt(0, blockArray.length)];
+  answerIndex = blockArray[getRandomInt(0, blockArray.length)];  //answer becomes random object in blockArray
   alert('Pick one of the blocks. Only one is correct.');
 
   $("main").on('click', '.block', function(){
@@ -25,6 +27,7 @@ $(document).ready(function(){
   });
 });
 
+//generates a random color and
 function randomColor(array){
   for (var i = 0; i < array.length; i++) {
     oldBlockArrayID[i] = array[i].id;
@@ -35,10 +38,13 @@ function randomColor(array){
   }
 }
 
+//returns a random integer
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+//Adds a box for each blockArray index and colors according to random rgb values.
+//Gives each block the random id generated so it can match up with the answer.
 function appendDom(array) {
   for (var i = 0; i < array.length; i++) {
     $("main").append('<div class="col-md-3 block" id="' + array[i].id + '"></div>');
@@ -46,16 +52,19 @@ function appendDom(array) {
   }
 };
 
+//
 function updateDom(array){
   for (var i = 0; i < array.length; i++) {
     $('#' + oldBlockArrayID[i]).css('background-color', 'rgb(' + array[i].r + ',' + array[i].g + ',' + array[i].b + ')');
     $('#' + oldBlockArrayID[i]).attr('id', array[i].id);
-    answerIndex = blockArray[getRandomInt(0, blockArray.length)];
+    answerIndex = blockArray[getRandomInt(0, blockArray.length)];  //answer becomes a random object from blockArray
   }
 }
 
+
+//takes in which block was clicked and checks its id against the answer
 function answerChecker(div) {
-  var id = parseInt($(div).attr('id'));
+  var id = parseInt($(div).attr('id'));  //turn id into a number
   console.log(id);
   console.log(answerIndex.id);
   if(id === answerIndex.id){
